@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Girish Lade | Comic Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Comic-ish Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #fff5cc;
+      --bg-panel: #ffffff;
+      --accent-yellow: #ffd600;
+      --accent-red: #ff1744;
+      --accent-blue: #2979ff;
+      --accent-dark: #111111;
+      --text-main: #1b1b1b;
+      --shadow-strong: 6px 6px 0 #000000;
+      --radius-panel: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Halftone background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image: radial-gradient(circle, #000 1px, transparent 1px);
+      background-size: 10px 10px;
+      z-index: -1;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Utility */
+    .container {
+      width: min(1100px, 100% - 2.5rem);
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: "Bangers", system-ui;
+      font-size: clamp(2.2rem, 3vw, 2.8rem);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      display: inline-block;
+      padding: 0.1rem 1.4rem;
+      background: var(--accent-yellow);
+      border: 3px solid #000;
+      box-shadow: 4px 4px 0 #000;
+      transform: skew(-3deg);
+    }
+
+    .section-sub {
+      max-width: 640px;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .panel {
+      background: var(--bg-panel);
+      border-radius: var(--radius-panel);
+      border: 3px solid #000;
+      box-shadow: var(--shadow-strong);
+      padding: 1.5rem 1.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(0, 0, 0, 0.13) 1px, transparent 1px);
+      background-size: 12px 12px;
+      opacity: 0.15;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.1rem 0.55rem;
+      border-radius: 999px;
+      border: 2px solid #000;
+      background: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-red);
+    }
+
+    /* Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--accent-yellow);
+      border-bottom: 3px solid #000;
+      box-shadow: 0 5px 0 #000;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      gap: 1rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-bubble {
+      font-family: "Bangers", system-ui;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      padding: 0.2rem 0.8rem;
+      background: #fff;
+      border-radius: 999px;
+      border: 3px solid #000;
+      box-shadow: 3px 3px 0 #000;
+      transform: skew(-5deg);
+    }
+
+    .logo-sub {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 0.15rem 0.2rem;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.1rem;
+      width: 0%;
+      height: 3px;
+      background: #000;
+      transition: width 0.18s ease-out;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      padding: 0.45rem 1.05rem;
+      border-radius: 999px;
+      border: 3px solid #000;
+      background: var(--accent-red);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: 4px 4px 0 #000;
+      cursor: pointer;
+      transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+      white-space: nowrap;
+    }
+
+    .btn.secondary {
+      background: #fff;
+      color: #000;
+    }
+
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 #000;
+    }
+
+    .btn:active {
+      transform: translate(0, 0);
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    /* Mobile nav */
+    .nav-toggle {
+      display: none;
+      border: 0;
+      background: #000;
+      color: #fff;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    @media (max-width: 780px) {
+      .nav-links {
+        position: fixed;
+        inset: 56px 0 auto 0;
+        background: var(--accent-yellow);
+        flex-direction: column;
+        padding: 1rem 1.25rem 1.25rem;
+        border-bottom: 3px solid #000;
+        transform: translateY(-120%);
+        transition: transform 0.18s ease-out;
+      }
+
+      .nav-links.open {
+        transform: translateY(0);
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      padding: 2.5rem 0 2rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
+      gap: 2.3rem;
+      align-items: center;
+    }
+
+    @media (max-width: 880px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-title-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-radius: 999px;
+      border: 3px solid #000;
+      padding: 0.15rem 0.65rem;
+      background: #fff;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.7rem;
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    .hero-headline {
+      font-family: "Bangers", system-ui;
+      font-size: clamp(2.6rem, 5vw, 3.4rem);
+      line-height: 1.02;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-highlight {
+      background: var(--accent-blue);
+      color: #fff;
+      padding: 0 0.35rem;
+      box-shadow: 5px 5px 0 #000;
+      display: inline-block;
+      transform: skew(-3deg);
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      margin: 0.9rem 0 1.2rem;
+      max-width: 520px;
+    }
+
+    .hero-roles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-meta {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    /* Hero avatar card */
+    .hero-avatar {
+      position: relative;
+    }
+
+    .boom {
+      position: absolute;
+      top: -18px;
+      left: -18px;
+      background: var(--accent-red);
+      color: #fff;
+      padding: 0.1rem 0.6rem;
+      font-family: "Bangers", system-ui;
+      font-size: 1.1rem;
+      border: 3px solid #000;
+      box-shadow: 4px 4px 0 #000;
+      transform: rotate(-8deg);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .avatar-panel {
+      aspect-ratio: 4 / 5;
+      background: linear-gradient(135deg, #2979ff, #ff1744);
+      border-radius: var(--radius-panel);
+      border: 3px solid #000;
+      box-shadow: var(--shadow-strong);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avatar-hero {
+      position: absolute;
+      inset: 12%;
+      border-radius: 50% 50% 44% 56%;
+      border: 3px solid #000;
+      background: radial-gradient(circle at 30% 20%, #ffe082 0, #ffb300 30%, #f4511e 100%);
+    }
+
+    .avatar-caption {
+      position: absolute;
+      bottom: 10px;
+      left: 8px;
+      right: 8px;
+      background: #fff;
+      border-radius: 999px;
+      border: 3px solid #000;
+      padding: 0.15rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    .avatar-caption span:nth-child(2) {
+      font-size: 0.7rem;
+      opacity: 0.9;
+    }
+
+    /* Sections */
+    section {
+      padding: 2.5rem 0 2.2rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
+      gap: 1.6rem;
+    }
+
+    @media (max-width: 820px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .about-list {
+      list-style: none;
+      margin-top: 0.8rem;
+    }
+
+    .about-list li {
+      display: flex;
+      gap: 0.55rem;
+      margin-bottom: 0.4rem;
+      font-size: 0.92rem;
+    }
+
+    .about-list li::before {
+      content: "▸";
+      font-weight: 900;
+      margin-top: 0.1rem;
+    }
+
+    .info-table {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.4rem 1.1rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .info-label {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.7rem;
+    }
+
+    .pill-badge {
+      font-family: "Bangers", system-ui;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      padding: 0.1rem 0.8rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      border: 3px solid #000;
+      background: var(--accent-yellow);
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.3rem;
+    }
+
+    .skill-title {
+      font-family: "Bangers", system-ui;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+    }
+
+    .skill-chip {
+      border-radius: 999px;
+      border: 2px solid #000;
+      background: #fff;
+      padding: 0.15rem 0.7rem;
+      font-weight: 700;
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.3rem;
+    }
+
+    .project-title {
+      font-weight: 800;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .tag-pill {
+      border-radius: 999px;
+      border: 2px solid #000;
+      padding: 0.05rem 0.55rem;
+      background: #fff;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .mini-btn {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      border: 2px solid #000;
+      background: var(--accent-blue);
+      color: #fff;
+      font-weight: 800;
+      text-transform: uppercase;
+      box-shadow: 3px 3px 0 #000;
+      cursor: pointer;
+    }
+
+    .mini-btn.secondary {
+      background: #fff;
+      color: #000;
+    }
+
+    /* Experience */
+    .timeline {
+      position: relative;
+      padding-left: 1.6rem;
+      margin-top: 0.4rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0.6rem;
+      width: 4px;
+      background: #000;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0.7rem 0 0.7rem 0.6rem;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -0.14rem;
+      top: 1rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 3px solid #000;
+      background: var(--accent-yellow);
+    }
+
+    .timeline-role {
+      font-weight: 800;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    .timeline-meta {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-list {
+      list-style: none;
+      font-size: 0.9rem;
+    }
+
+    .timeline-list li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* Services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .service-title {
+      font-family: "Bangers", system-ui;
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .service-list {
+      list-style: none;
+      font-size: 0.9rem;
+    }
+
+    .service-list li {
+      margin-bottom: 0.3rem;
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .service-list li::before {
+      content: "✔";
+      font-size: 0.85rem;
+      margin-top: 0.1rem;
+    }
+
+    /* Testimonials */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .bubble {
+      position: relative;
+      background: #fff;
+      border-radius: 18px;
+      border: 3px solid #000;
+      padding: 0.9rem 1rem;
+      box-shadow: 4px 4px 0 #000;
+      font-size: 0.9rem;
+    }
+
+    .bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -14px;
+      left: 16px;
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-left: 3px solid #000;
+      border-bottom: 3px solid #000;
+      transform: rotate(45deg);
+    }
+
+    .bubble-author {
+      margin-top: 0.55rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    /* Blog */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .blog-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .blog-meta {
+      font-size: 0.78rem;
+      opacity: 0.8;
+      margin-bottom: 0.4rem;
+    }
+
+    .blog-desc {
+      font-size: 0.88rem;
+      margin-bottom: 0.4rem;
+    }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.1fr);
+      gap: 1.6rem;
+    }
+
+    @media (max-width: 820px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 0.8rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.5rem 0.6rem;
+      border-radius: 14px;
+      border: 3px solid #000;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      background: #fff;
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    input:focus,
+    textarea:focus {
+      background: #fffef3;
+    }
+
+    .contact-info-line {
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .social-chip {
+      border-radius: 999px;
+      border: 2px solid #000;
+      padding: 0.15rem 0.7rem;
+      background: #fff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 3px solid #000;
+      margin-top: 0.5rem;
+      padding: 0.9rem 0;
+      background: #ffea80;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+    }
+
+    .footer-note {
+      font-style: italic;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 0.6rem;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .footer-links a {
+      border-bottom: 2px solid #000;
+    }
+
+    @media (max-width: 580px) {
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Navbar -->
+  <header>
+    <div class="container nav">
+      <div class="nav-logo">
+        <div class="logo-bubble">Girish</div>
+        <div class="logo-sub">Lade Stack • Dev & Designer</div>
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        ☰
+      </button>
+
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#services">Services</a>
+        <a href="#experience">Experience</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
+        <button class="btn" onclick="document.querySelector('#contact').scrollIntoView({behavior: 'smooth'})">
+          Hire Me
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="home" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-title-badge">
+          <span>Issue #1</span>
+          <span>Origin of a Builder</span>
+        </div>
+
+        <h1 class="hero-headline">
+          <span class="hero-highlight">Girish Lade</span><br />
+          Developer • Designer • Founder
+        </h1>
+
+        <p class="hero-sub">
+          Crafting AI-powered digital experiences, smooth UI, and scalable products that actually ship.
+          I mix clean design, smart engineering, and automation to build tools for the next wave of creators.
+        </p>
+
+        <div class="hero-roles">
+          <span class="tag">
+            <span class="tag-dot"></span> Engineer
+          </span>
+          <span class="tag">
+            <span class="tag-dot"></span> UI/UX Designer
+          </span>
+          <span class="tag">
+            <span class="tag-dot"></span> Founder — Lade Stack
+          </span>
+        </div>
+
+        <div class="hero-actions">
+          <button class="btn" onclick="document.querySelector('#projects').scrollIntoView({behavior: 'smooth'})">
+            View My Work
+          </button>
+          <button class="btn secondary">
+            Download CV
+          </button>
+        </div>
+
+        <p class="hero-meta">
+          Based in Solapur, Maharashtra · Building AI tools, SaaS products, and automation systems.
+        </p>
+      </div>
+
+      <div class="hero-avatar">
+        <div class="boom">Boom!</div>
+        <div class="avatar-panel">
+          <div class="avatar-hero"></div>
+          <div class="avatar-caption">
+            <span>Super Dev Mode</span>
+            <span>Code • Design • Ship</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">My Origin Story</h2>
+      <p class="section-sub">
+        I’m <strong>Girish Lade</strong>, an engineer, developer, UI/UX designer, and the founder of
+        <strong>Lade Stack</strong> (formerly GBStack). I love turning ideas into
+        working products — fast, clean, and future-ready. From frontends and backends to automation and AI agents,
+        I live in that sweet spot where logic meets creativity.
+      </p>
+
+      <div class="about-grid">
+        <div class="panel">
+          <div class="panel-inner">
+            <h3>Who I Am</h3>
+            <p style="margin-top:0.4rem;font-size:0.94rem;">
+              I build AI-powered tools, web apps, mobile apps, and systems that help developers and creators do more with
+              less effort. My default mode: experiment, learn, optimize, repeat.
+            </p>
+
+            <ul class="about-list">
+              <li>Designing and developing modern, responsive UIs.</li>
+              <li>Building full-stack web and mobile experiences.</li>
+              <li>Integrating AI, agents, and automation into real products.</li>
+              <li>Deploying, iterating, and shipping fast like a startup should.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h3>Quick Stats</h3>
+            <div class="info-table">
+              <div class="info-label">Name</div>
+              <div>Girish Lade</div>
+
+              <div class="info-label">Based In</div>
+              <div>Solapur, Maharashtra</div>
+
+              <div class="info-label">Role</div>
+              <div>Engineer · Developer · Designer · Founder</div>
+
+              <div class="info-label">Email</div>
+              <div><a href="mailto:girishladeofficial@gmail.com">girishladeofficial@gmail.com</a></div>
+
+              <div class="info-label">Freelance</div>
+              <div>Available</div>
+            </div>
+
+            <p style="font-size:0.9rem;">
+              I enjoy testing AI tools, exploring new stacks, experimenting with game dev, and occasionally
+              painting terracotta when I’m away from the screen.
+            </p>
+
+            <div class="badge-row">
+              <span class="pill-badge">Problem Solver</span>
+              <span class="pill-badge">Pixel Perfectionist</span>
+              <span class="pill-badge">Futurist Builder</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">Super Powers</h2>
+      <p class="section-sub">
+        From smooth frontends to scalable backends and AI integrations, here’s the tech I bring to the table.
+      </p>
+
+      <div class="skills-grid">
+        <div class="panel">
+          <div class="panel-inner">
+            <h3 class="skill-title">Frontend Powers</h3>
+            <div class="skill-tags">
+              <span class="skill-chip">HTML</span>
+              <span class="skill-chip">CSS</span>
+              <span class="skill-chip">JavaScript</span>
+              <span class="skill-chip">React</span>
+              <span class="skill-chip">Next.js</span>
+              <span class="skill-chip">Tailwind</span>
+              <span class="skill-chip">Framer Motion</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h3 class="skill-title">Backend & Cloud</h3>
+            <div class="skill-tags">
+              <span class="skill-chip">Supabase</span>
+              <span class="skill-chip">Firebase</span>
+              <span class="skill-chip">Node APIs</span>
+              <span class="skill-chip">Auth & Security</span>
+              <span class="skill-chip">Database Design</span>
+              <span class="skill-chip">Cloud Functions</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h3 class="skill-title">AI & Automation</h3>
+            <div class="skill-tags">
+              <span class="skill-chip">LLM Tools</span>
+              <span class="skill-chip">AI Agents</span>
+              <span class="skill-chip">Genkit</span>
+              <span class="skill-chip">Workflow Automation</span>
+              <span class="skill-chip">API Integrations</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h3 class="skill-title">Dev & Creative Stack</h3>
+            <div class="skill-tags">
+              <span class="skill-chip">GitHub</span>
+              <span class="skill-chip">CI/CD</span>
+              <span class="skill-chip">Flutter</span>
+              <span class="skill-chip">Unity</span>
+              <span class="skill-chip">Godot</span>
+              <span class="skill-chip">Blender</span>
+              <span class="skill-chip">Figma</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">Featured Missions</h2>
+      <p class="section-sub">
+        A glimpse of the missions I’ve been on — from AI tools to full-stack apps and experiments.
+      </p>
+
+      <div class="projects-grid">
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="project-title">Lade Stack (formerly GBStack)</div>
+            <p class="project-desc">
+              AI-powered developer tools and automation systems focused on speed, simplicity, and real-world use.
+            </p>
+            <div class="tag-list">
+              <span class="tag-pill">AI</span>
+              <span class="tag-pill">SaaS</span>
+              <span class="tag-pill">Automation</span>
+            </div>
+            <div class="project-actions">
+              <button class="mini-btn">Live Demo</button>
+              <button class="mini-btn secondary">Source Code</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="project-title">Custom AI Assistants & Agents</div>
+            <p class="project-desc">
+              LLM-powered assistants that help with tasks, workflows, and decision-making across different domains.
+            </p>
+            <div class="tag-list">
+              <span class="tag-pill">LLM</span>
+              <span class="tag-pill">Agents</span>
+              <span class="tag-pill">APIs</span>
+            </div>
+            <div class="project-actions">
+              <button class="mini-btn">Case Study</button>
+              <button class="mini-btn secondary">GitHub</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="project-title">UI Systems & Dashboards</div>
+            <p class="project-desc">
+              Modern, responsive dashboards and UI systems built with React and Next.js, optimized for dev teams.
+            </p>
+            <div class="tag-list">
+              <span class="tag-pill">React</span>
+              <span class="tag-pill">Next.js</span>
+              <span class="tag-pill">Design</span>
+            </div>
+            <div class="project-actions">
+              <button class="mini-btn">View Screens</button>
+              <button class="mini-btn secondary">GitHub</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="project-title">Game Dev Experiments</div>
+            <p class="project-desc">
+              Survival mechanics, prototypes, and small games built using Unity and Godot as creative playgrounds.
+            </p>
+            <div class="tag-list">
+              <span class="tag-pill">Unity</span>
+              <span class="tag-pill">Godot</span>
+              <span class="tag-pill">Game Dev</span>
+            </div>
+            <div class="project-actions">
+              <button class="mini-btn">Playtest</button>
+              <button class="mini-btn secondary">Devlog</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title">What I Can Do For You</h2>
+      <p class="section-sub">
+        Need a clean product, a smart system, or an AI-powered tool? Here’s how I can help bring it to life.
+      </p>
+
+      <div class="services-grid">
+        <div class="panel">
+          <div class="panel-inner">
+            <h3 class="service-title">Web & App Development</h3>
+            <ul class="service-list">
+              <li>Full-stack web apps and SaaS products.</li>
+              <li>Landing pages, dashboards, and internal tools.</li>
+              <li>Performance-focused builds ready to scale.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h3 class="service-title">UI/UX & Product Design</h3>
+            <ul class="service-list">
+              <li>Clean, modern interfaces with strong UX.</li>
+              <li>Wireframes, flows, and design systems.</li>
+              <li>Brand-aligned visuals and layouts.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h3 class="service-title">AI Tools & Automation</h3>
+            <ul class="service-list">
+              <li>Custom AI assistants and agents.</li>
+              <li>Workflow automation and integrations.</li>
+              <li>LLM-powered features inside your product.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h3 class="service-title">Consulting & Strategy</h3>
+            <ul class="service-list">
+              <li>Product & feature planning.</li>
+              <li>Architecture & tech stack decisions.</li>
+              <li>Launch strategy for early-stage ideas.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="container">
+      <h2 class="section-title">Timeline of Quests</h2>
+      <p class="section-sub">
+        A quick timeline of how I’ve been leveling up as a builder across engineering, design, and product.
+      </p>
+
+      <div class="panel">
+        <div class="panel-inner">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-role">Founder — Lade Stack</div>
+              <div class="timeline-meta">Building AI-powered tools & SaaS · Ongoing</div>
+              <ul class="timeline-list">
+                <li>Designing and shipping tools that simplify dev workflows.</li>
+                <li>Experimenting with LLMs, agents, and automation systems.</li>
+                <li>Running everything from design and dev to deployment.</li>
+              </ul>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-role">Engineer & Full-Stack Developer</div>
+              <div class="timeline-meta">Web · Mobile · Systems</div>
+              <ul class="timeline-list">
+                <li>Building responsive frontends with React/Next.js.</li>
+                <li>Creating robust backends on Supabase & Firebase.</li>
+                <li>Optimizing performance, auth, and database flows.</li>
+              </ul>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-role">UI/UX Designer & Creative Dev</div>
+              <div class="timeline-meta">Product, Games & Experiments</div>
+              <ul class="timeline-list">
+                <li>Designing interfaces, flows, and component systems.</li>
+                <li>Exploring game dev using Unity & Godot.</li>
+                <li>Playing with 3D in Blender and creative side projects.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title">Allies & Clients</h2>
+      <p class="section-sub">
+        A few words from people who’ve worked with me or used my builds.
+      </p>
+
+      <div class="testimonials-grid">
+        <div class="bubble">
+          “Girish ships polished work at a speed that feels unreal. From concept to live product, everything is smooth.”
+          <div class="bubble-author">Product Founder</div>
+        </div>
+        <div class="bubble">
+          “His sense of UI/UX is super modern yet practical. The designs look good and actually work in real usage.”
+          <div class="bubble-author">Design Collaborator</div>
+        </div>
+        <div class="bubble">
+          “One of the most versatile engineers I’ve seen — dev, design, AI, automation, mobile, even game dev.”
+          <div class="bubble-author">Developer Friend</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section id="blog">
+    <div class="container">
+      <h2 class="section-title">Latest Issues</h2>
+      <p class="section-sub">
+        Thoughts, breakdowns, and notes from the things I’m building and experimenting with.
+      </p>
+
+      <div class="blog-grid">
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="blog-title">Why AI-powered developer tools are the future</div>
+            <div class="blog-meta">Concept · Productivity · AI</div>
+            <p class="blog-desc">
+              Exploring how AI can handle repetitive dev tasks, let humans focus on decisions, and reshape the dev tool stack.
+            </p>
+            <button class="mini-btn secondary">Read More</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="blog-title">Building faster with Next.js + Supabase</div>
+            <div class="blog-meta">Dev Stack · Web Apps</div>
+            <p class="blog-desc">
+              How I combine Next.js, Supabase, and modern tooling to ship full-stack projects quickly without losing quality.
+            </p>
+            <button class="mini-btn secondary">Read More</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="blog-title">My approach to clean UI/UX that actually works</div>
+            <div class="blog-meta">Design · UX</div>
+            <p class="blog-desc">
+              A simple framework I use when designing — from first wireframe to final production UI.
+            </p>
+            <button class="mini-btn secondary">Read More</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="blog-title">Simple but powerful automation systems</div>
+            <div class="blog-meta">Automation · Systems</div>
+            <p class="blog-desc">
+              How small, well-designed automations can save hours every day and keep teams in flow.
+            </p>
+            <button class="mini-btn secondary">Read More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Call for Backup</h2>
+      <p class="section-sub">
+        Got a mission, product idea, or something wild you want to build? Drop a message — let’s turn it into something real.
+      </p>
+
+      <div class="contact-grid">
+        <div class="panel">
+          <div class="panel-inner">
+            <form>
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input id="name" type="text" placeholder="Enter your name" />
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input id="email" type="email" placeholder="Enter your email" />
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input id="subject" type="text" placeholder="Project, collaboration, question…" />
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" placeholder="Tell me about what you want to build..."></textarea>
+              </div>
+              <button type="submit" class="btn">
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h3>Direct Contact</h3>
+            <p class="contact-info-line">
+              <strong>Email:</strong>
+              <a href="mailto:girishladeofficial@gmail.com">girishladeofficial@gmail.com</a>
+            </p>
+            <p class="contact-info-line">
+              <strong>Location:</strong> Solapur, Maharashtra, India
+            </p>
+            <p class="contact-info-line">
+              <strong>Freelance:</strong> Open to projects, collabs, and experiments.
+            </p>
+
+            <h4 style="margin-top:0.9rem;">Social Links</h4>
+            <div class="social-links">
+              <a href="#" class="social-chip">GitHub</a>
+              <a href="#" class="social-chip">LinkedIn</a>
+              <a href="#" class="social-chip">X / Twitter</a>
+              <a href="#" class="social-chip">Portfolio</a>
+            </div>
+
+            <p style="margin-top:0.9rem;font-size:0.9rem;">
+              Prefer async? Send me details over email with links, context, and your goals — I’ll get back with ideas and next steps.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2025 <strong>Girish Lade</strong>. All rights reserved.</div>
+      <div class="footer-note">Made with caffeine, curiosity, and a bit of chaos.</div>
+      <div class="footer-links">
+        <a href="#home">Top</a>
+        <a href="#projects">Work</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Simple smooth scroll for navbar links -->
+  <script>
+    document.querySelectorAll('header a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const targetId = link.getAttribute('href');
+        const el = document.querySelector(targetId);
+        if (!el) return;
+        e.preventDefault();
+        document.querySelector('.nav-links')?.classList.remove('open');
+        el.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
